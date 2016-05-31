@@ -1,0 +1,65 @@
+util = require './libs/util'
+config = require './config'
+server = require './libs/servers'
+topSigner = require './libs/signers/top'
+request = require 'request'
+Promise = require 'bluebird'
+_ = require 'lodash'
+
+###
+  调用方式：
+  doRequest 'ecs.CreateInstance', options, cb
+  doRequest 'ecs:CreateInstance', options, cb
+###
+doRequest = (action, options)->
+  options.Action = action
+  options.Timestamp = (new Date).toISOString().replace(/\.\d{3}/, '')
+  options.SignatureNonce = util.uuid()
+  options = _.extend {}, config.commonOptions, options
+
+  # 提取不需要签名的方法
+  domain = options.Domain
+  delete options.Domain
+  method = if options.Method? then options.Method else 'GET'
+  delete options.Method
+  protocol = if options.Protocol? then options.Protocol else 'http'
+  delete options.Protocol
+  # 签名
+  delete options.Signature
+  secret = options.AccessKeySecret
+  delete options.AccessKeySecret
+  options.Signature = topSigner.sign options, secret
+  # 参数排序
+  querys = util.params2queryArr options
+
+  # 定义request的参数
+  reqOptions =
+    method: method
+    uri: "#{protocol}://#{domain}"
+
+  # 区分get和post
+  if method.toUpperCase() is 'GET'
+    reqOptions.uri += "?" + querys.join '&'
+  else
+    reqOptions.form = options
+  # 定义callback
+  return new Promise (resolve, reject)->
+    request reqOptions, (err, res, body)->
+      if err?
+        reject err
+      else
+        resolve body
+    return
+
+class Client
+  constructor: (serverName, options)->
+    @serverName = serverName.toLowerCase()
+    @options = options
+    # 检查config里面有没有相关产品的配置
+    if config.servers[@serverName]?
+      @options = _.extend {}, config.servers[@serverName], @options
+  get: (action, options)->
+    _options = _.extend {}, @options, options
+    doRequest(action, _options)
+
+exports.Client = Client
