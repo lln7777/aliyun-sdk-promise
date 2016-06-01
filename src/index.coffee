@@ -1,10 +1,10 @@
-util = require './libs/util'
-config = require './config'
-server = require './libs/servers'
+util      = require './libs/util'
+config    = require './config'
+server    = require './libs/servers'
 topSigner = require './libs/signers/top'
-request = require 'request'
-Promise = require 'bluebird'
-_ = require 'lodash'
+request   = require 'request'
+Promise   = require 'bluebird'
+_         = require 'lodash'
 
 ###
   调用方式：
