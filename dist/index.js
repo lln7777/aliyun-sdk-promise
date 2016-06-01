@@ -22,17 +22,17 @@ _ = require('lodash');
  */
 
 doRequest = function(action, options) {
-  var domain, method, protocol, querys, ref, reqOptions, secret, self;
+  var domain, method, protocol, querys, ref, ref1, ref2, reqOptions, secret, self;
   self = this;
   options.Action = action;
   options.Timestamp = (new Date).toISOString().replace(/\.\d{3}/, '');
   options.SignatureNonce = util.uuid();
-  options = _.extend({}, config.commonOptions, options);
+  options = _.extend({}, config.CommonOptions, options);
   domain = options.Domain;
   delete options.Domain;
   method = options.Method != null ? options.Method : 'GET';
   delete options.Method;
-  protocol = options.Protocol != null ? options.Protocol : 'http';
+  protocol = (ref = (ref1 = options.Protocol) != null ? ref1 : config.Protocol) != null ? ref : 'http';
   delete options.Protocol;
   delete options.Signature;
   secret = options.AccessKeySecret;
@@ -41,7 +41,7 @@ doRequest = function(action, options) {
   querys = util.params2queryArr(options);
   reqOptions = {
     method: method,
-    json: (ref = options.json) != null ? ref : true,
+    json: (ref2 = options.json) != null ? ref2 : true,
     uri: protocol + "://" + domain
   };
   if (method.toUpperCase() === 'GET') {
@@ -65,10 +65,10 @@ doRequest = function(action, options) {
 
 Client = (function() {
   function Client(serverName, options) {
-    this.serverName = serverName.toLowerCase();
+    this.serverName = serverName.toUpperCase();
     this.options = options;
-    if (config.servers[this.serverName] != null) {
-      this.options = _.extend({}, config.servers[this.serverName], this.options);
+    if (config.Servers[this.serverName] != null) {
+      this.options = _.extend({}, config.Servers[this.serverName], this.options);
     }
   }
 

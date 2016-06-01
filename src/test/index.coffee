@@ -1,30 +1,48 @@
 AliSdk = require '../index'
 
-############# ECS
-ecsOptions =
-  Domain: 'ecs.aliyuncs.com'
-  Version: '2014-05-26'
-  AccessKeyId: 'xxxxx'
-  AccessKeySecret: 'xxxxxxxxxxxx'
-ecs = new AliSdk.Client 'ecs', ecsOptions
+# 请替换成自己的KEY
+options =
+  AccessKeyId: 'xxxxxxxxxxxx'
+  AccessKeySecret: 'xxxxxxxxxxxxxxx'
 
-ecs.after = (body)->
-  console.log body
+############# ECS
+ecs = new AliSdk.Client 'ECS', options
+rds = new AliSdk.Client 'RDS', options
+slb = new AliSdk.Client 'SLB', options
+ess = new AliSdk.Client 'ESS', options
+cms = new AliSdk.Client 'CMS', options
+ram = new AliSdk.Client 'RAM', options
+sts = new AliSdk.Client 'STS', options
+
+# ecs.after = (body)->
+#   console.log body
 
 ecs.get 'DescribeInstances', {RegionId: 'cn-hangzhou'}
 .then (body)->
   console.log body
 .catch (err)->
   console.log err
-#
-############# RDS
-#rdsOptions =
-#  Domain: 'rds.aliyuncs.com'
-#  Version: '2014-08-15'
-#  RegionId: 'cn-hangzhou'
-#  AccessKeyId: 'xxxxx'
-#  AccessKeySecret: 'xxxxxxxxxxxx'
-#rds = new AliSdk.Client 'rds', rdsOptions
-#
-#rds.get 'DescribeDBInstances', null, (err, body)->
-#  console.log err, body
+
+rds.get 'DescribeDBInstances', {RegionId: 'cn-hangzhou'}
+.then (body)->
+  console.log body
+.catch (err)->
+  console.log err
+
+ram.get 'ListUsers'
+.then (body)->
+  console.log body.Users.User
+.catch (err)->
+  console.log err
+
+slb.get 'DescribeLoadBalancers', {RegionId: 'cn-hangzhou'}
+.then (body)->
+  console.log body
+.catch (err)->
+  console.log err
+
+ess.get 'DescribeScalingGroups', {RegionId: 'cn-hangzhou'}
+.then (body)->
+  console.log body
+.catch (err)->
+  console.log err
