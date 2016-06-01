@@ -22,7 +22,8 @@ _ = require('lodash');
  */
 
 doRequest = function(action, options) {
-  var domain, method, protocol, querys, reqOptions, secret;
+  var domain, method, protocol, querys, reqOptions, secret, self;
+  self = this;
   options.Action = action;
   options.Timestamp = (new Date).toISOString().replace(/\.\d{3}/, '');
   options.SignatureNonce = util.uuid();
@@ -52,8 +53,8 @@ doRequest = function(action, options) {
       if (err != null) {
         return reject(err);
       } else {
-        if ((this.after != null) && (typeof this.after === 'function')) {
-          this.after(body);
+        if ((self.after != null) && (typeof self.after === 'function')) {
+          self.after(body);
         }
         return resolve(body);
       }
