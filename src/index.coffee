@@ -36,6 +36,7 @@ doRequest = (action, options)->
   # 定义request的参数
   reqOptions =
     method: method
+    json: options.json ? true
     uri: "#{protocol}://#{domain}"
 
   # 区分get和post

@@ -22,7 +22,7 @@ _ = require('lodash');
  */
 
 doRequest = function(action, options) {
-  var domain, method, protocol, querys, reqOptions, secret, self;
+  var domain, method, protocol, querys, ref, reqOptions, secret, self;
   self = this;
   options.Action = action;
   options.Timestamp = (new Date).toISOString().replace(/\.\d{3}/, '');
@@ -41,6 +41,7 @@ doRequest = function(action, options) {
   querys = util.params2queryArr(options);
   reqOptions = {
     method: method,
+    json: (ref = options.json) != null ? ref : true,
     uri: protocol + "://" + domain
   };
   if (method.toUpperCase() === 'GET') {
