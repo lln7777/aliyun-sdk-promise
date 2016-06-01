@@ -48,6 +48,8 @@ doRequest = (action, options)->
       if err?
         reject err
       else
+        if this.after? and (typeof this.after is 'function')
+          this.after body
         resolve body
     return
 
@@ -60,6 +62,6 @@ class Client
       @options = _.extend {}, config.servers[@serverName], @options
   get: (action, options)->
     _options = _.extend {}, @options, options
-    doRequest(action, _options)
+    doRequest.call(this, action, _options)
 
 exports.Client = Client
