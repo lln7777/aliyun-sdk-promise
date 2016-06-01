@@ -12,6 +12,7 @@ _ = require 'lodash'
   doRequest 'ecs:CreateInstance', options, cb
 ###
 doRequest = (action, options)->
+  self = this
   options.Action = action
   options.Timestamp = (new Date).toISOString().replace(/\.\d{3}/, '')
   options.SignatureNonce = util.uuid()
@@ -48,8 +49,8 @@ doRequest = (action, options)->
       if err?
         reject err
       else
-        if this.after? and (typeof this.after is 'function')
-          this.after body
+        if self.after? and (typeof self.after is 'function')
+          self.after body
         resolve body
     return
 
