@@ -7,6 +7,10 @@ ecsOptions =
   AccessKeyId: 'xxxxx'
   AccessKeySecret: 'xxxxxxxxxxxx'
 ecs = new AliSdk.Client 'ecs', ecsOptions
+
+ecs.after = (body)->
+  console.log body
+
 ecs.get 'DescribeInstances', {RegionId: 'cn-hangzhou'}
 .then (body)->
   console.log body

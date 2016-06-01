@@ -52,6 +52,9 @@ doRequest = function(action, options) {
       if (err != null) {
         return reject(err);
       } else {
+        if ((this.after != null) && (typeof this.after === 'function')) {
+          this.after(body);
+        }
         return resolve(body);
       }
     });
@@ -70,7 +73,7 @@ Client = (function() {
   Client.prototype.get = function(action, options) {
     var _options;
     _options = _.extend({}, this.options, options);
-    return doRequest(action, _options);
+    return doRequest.call(this, action, _options);
   };
 
   return Client;

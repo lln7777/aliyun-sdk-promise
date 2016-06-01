@@ -11,6 +11,10 @@ ecsOptions = {
 
 ecs = new AliSdk.Client('ecs', ecsOptions);
 
+ecs.after = function(body) {
+  return console.log(body);
+};
+
 ecs.get('DescribeInstances', {
   RegionId: 'cn-hangzhou'
 }).then(function(body) {
