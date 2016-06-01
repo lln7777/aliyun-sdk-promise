@@ -3,8 +3,8 @@ var AliSdk, cms, ecs, ess, options, ram, rds, slb, sts;
 AliSdk = require('../index');
 
 options = {
-  AccessKeyId: '9pu26eqUtqTusLGz',
-  AccessKeySecret: 'XL2gAGNolBTJTHZcXMj5jYZXEabxYp'
+  AccessKeyId: 'xxxxxxxxxxxx',
+  AccessKeySecret: 'xxxxxxxxxxxxxxx'
 };
 
 ecs = new AliSdk.Client('ECS', options);

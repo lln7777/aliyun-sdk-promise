@@ -6,21 +6,40 @@
 # 声明
 此库还在开发中，不建议大家在实际的项目中使用，暂时只支持ECS。其他产品和ECS签名方法一致，用法一致的可以快速支持。有兴趣的朋友可以帮忙看看代码，提提意见，谢谢！
 
+# 目前支持以下产品或功能
+
+* 云服务器ECS
+* 云存储RDS
+* 负载均衡SLB
+* 云监控CMS
+* 权限控制(RAM和STS)
+* 弹性伸缩ESS
+
 # 用法
 ## 简单用法
 ```javascript
-var AliSdk = require('../index');
+var AliSdk, cms, ecs, ess, options, ram, rds, slb, sts;
 
-var ecsOptions = {
-  AccessKeyId: 'xxxxx',
-  AccessKeySecret: 'xxxxxxxxxxxx'
+AliSdk = require('../index');
+
+options = {
+  AccessKeyId: 'xxxxxxxxxxxx',
+  AccessKeySecret: 'xxxxxxxxxxxxxxx'
 };
 
-var ecs = new AliSdk.Client('ecs', ecsOptions);
+ecs = new AliSdk.Client('ECS', options);
 
-ecs.after = function(body) {
-  return console.log(body);
-};
+rds = new AliSdk.Client('RDS', options);
+
+slb = new AliSdk.Client('SLB', options);
+
+ess = new AliSdk.Client('ESS', options);
+
+cms = new AliSdk.Client('CMS', options);
+
+ram = new AliSdk.Client('RAM', options);
+
+sts = new AliSdk.Client('STS', options);
 
 ecs.get('DescribeInstances', {
   RegionId: 'cn-hangzhou'
@@ -30,7 +49,36 @@ ecs.get('DescribeInstances', {
   return console.log(err);
 });
 
+rds.get('DescribeDBInstances', {
+  RegionId: 'cn-hangzhou'
+}).then(function(body) {
+  return console.log(body);
+})["catch"](function(err) {
+  return console.log(err);
+});
 
+ram.get('ListUsers').then(function(body) {
+  return console.log(body.Users.User);
+})["catch"](function(err) {
+  return console.log(err);
+});
+
+slb.get('DescribeLoadBalancers', {
+  RegionId: 'cn-hangzhou'
+}).then(function(body) {
+  return console.log(body);
+})["catch"](function(err) {
+  return console.log(err);
+});
+
+ess.get('DescribeScalingGroups', {
+  RegionId: 'cn-hangzhou'
+}).then(function(body) {
+  return console.log(body);
+})["catch"](function(err) {
+  return console.log(err);
+});
 ```
+
 ## 其他用法
 Coming soon...

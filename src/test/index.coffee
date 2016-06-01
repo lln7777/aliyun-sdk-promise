@@ -5,7 +5,6 @@ options =
   AccessKeyId: 'xxxxxxxxxxxx'
   AccessKeySecret: 'xxxxxxxxxxxxxxx'
 
-############# ECS
 ecs = new AliSdk.Client 'ECS', options
 rds = new AliSdk.Client 'RDS', options
 slb = new AliSdk.Client 'SLB', options
