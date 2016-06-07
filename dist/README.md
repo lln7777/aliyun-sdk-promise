@@ -91,6 +91,8 @@ ess.get('DescribeScalingGroups', {
   return console.log(err);
 });
 ```
+#### 阿里云资源编排
+请使用 [aliyun-ros](https://www.npmjs.com/package/aliyun-ros)
 
 #### 其他用法
 Coming soon...
