@@ -20,6 +20,7 @@
 * 云监控CMS
 * 权限控制(RAM和STS)
 * 弹性伸缩ESS
+* 云市场镜像查询
 
 ## 用法
 
@@ -27,7 +28,7 @@
 
 #### 简单用法
 ```javascript
-var AliSdk, cms, ecs, ess, options, ram, rds, slb, sts;
+var AliSdk, cms, ecs, ess, options, ram, rds, slb, sts, market;
 
 AliSdk = require('../index');
 

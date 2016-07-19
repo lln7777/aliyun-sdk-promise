@@ -41,7 +41,7 @@ module.exports = {
     },
     MARKET: {
       Domain: 'market.aliyuncs.com',
-      Version: '2014-05-26'
+      Version: '2015-11-01'
     }
   }
 };
