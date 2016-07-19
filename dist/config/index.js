@@ -38,6 +38,10 @@ module.exports = {
     STS: {
       Domain: 'sts.aliyuncs.com',
       Version: '2015-04-01'
+    },
+    MARKET: {
+      Domain: 'market.aliyuncs.com',
+      Version: '2014-05-26'
     }
   }
 };

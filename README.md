@@ -50,6 +50,8 @@ ram = new AliSdk.Client('RAM', options);
 
 sts = new AliSdk.Client('STS', options);
 
+market = new AliSdk.Client('MARKET', options);
+
 ecs.get('DescribeInstances', {
   RegionId: 'cn-hangzhou'
 }).then(function(body) {
@@ -87,6 +89,27 @@ ess.get('DescribeScalingGroups', {
 })["catch"](function(err) {
   return console.log(err);
 });
+
+market.get('queryMarketCategories')
+.then(function(body) {
+  return console.log(body);
+})["catch"](function(err) {
+  return console.log(err);
+});
+
+market.get('queryMarketImages', {
+  Param: {
+    Region: 'cn-hangzhou',
+    ImagePurchaseType: 'Package',
+    CategoryCode: 'market_category',
+    CategoryId: 10001
+  }
+}).then(function(body) {
+  return console.log(body);
+})["catch"](function(err) {
+  return console.log(err);
+});
+
 ```
 #### 阿里云资源编排
 请使用 [aliyun-ros](https://www.npmjs.com/package/aliyun-ros)
