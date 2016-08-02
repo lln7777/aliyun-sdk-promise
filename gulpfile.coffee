@@ -1,5 +1,5 @@
-gulp         = require 'gulp'
-coffee       = require("gulp-coffee") # 编译coffee
+gulp         = require "gulp"
+coffee       = require "gulp-coffee" # 编译coffee
 clean        = require "gulp-clean" # 清除目录或文件
 
 distPath = './dist/';

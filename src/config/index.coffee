@@ -34,3 +34,6 @@ module.exports =
     MARKET:
       Domain: 'market.aliyuncs.com'
       Version:'2015-11-01'
+    AAS:
+      Domain: 'aas.aliyuncs.com'
+      Version: '2015-07-01'
