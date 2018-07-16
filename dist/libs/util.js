@@ -11,18 +11,22 @@ urlHelper = require("url");
 
 uuid = require('uuid');
 
+// 针对阿里的的几个字符的特殊处理
 exports.aliEscape = function(str) {
   return encodeURIComponent(str).replace(/\+/g, "%20").replace(/\*/g, "%2A").replace(/%7E/g, "~");
 };
 
+// opensearch和pop所用的签名机制
 exports.commonEscape = function(clearString) {
   return encodeURIComponent(clearString).replace(/\!/g, "%21").replace(/\'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29").replace(/\*/g, "%2A");
 };
 
+// 按阿里云文档对特殊字符escape
 exports.uriEscape = uriEscape = function(string) {
   var output;
   output = encodeURIComponent(string);
   output = output.replace(/[^A-Za-z0-9_.~\-%]+/g, escape);
+  // percent-encodes some extra non-standard characters in a URI
   output = output.replace(/\*/g, function(ch) {
     return "%" + ch.charCodeAt(0).toString(16).toUpperCase();
   });

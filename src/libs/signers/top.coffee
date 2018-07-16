@@ -7,7 +7,9 @@ util = require('../util')
 
 # 针对阿里的的几个字符的特殊处理
 specialEncode = (str) ->
-  encodeURIComponent(str).replace(/\+/g, "%20").replace(/\*/g, "%2A").replace /%7E/g, "~"
+  encodeURIComponent(str)
+  .replace /[!'()*+]/g, (c)->
+    '%' + c.charCodeAt(0).toString(16)
 
 handleParams = (params)->
   keysSorted = Object.keys(params).sort()

@@ -1,16 +1,18 @@
-
 /*
 Author: Ansel Chen
 Thanks xiaoshan5733
- */
+*/
 var crypto, handleParams, sign, specialEncode, util;
 
 crypto = require("crypto");
 
 util = require('../util');
 
+// 针对阿里的的几个字符的特殊处理
 specialEncode = function(str) {
-  return encodeURIComponent(str).replace(/\+/g, "%20").replace(/\*/g, "%2A").replace(/%7E/g, "~");
+  return encodeURIComponent(str).replace(/[!'()*+]/g, function(c) {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
 };
 
 handleParams = function(params) {
@@ -37,4 +39,5 @@ sign = function(params, secret) {
   return ret;
 };
 
+// 签名方法
 exports.sign = sign;
